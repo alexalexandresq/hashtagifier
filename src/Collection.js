@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { removeItem, deleteCollection } from "./actions";
 import {
   Button,
-  Col,
   Card,
   CardHeader,
   CardBody,

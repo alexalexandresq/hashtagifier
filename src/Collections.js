@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Collection from "./Collection";
-import { Button, Input, InputGroup, InputGroupAddon, Row } from "reactstrap";
+import { Button, Input, InputGroup, InputGroupAddon, Row, Col } from "reactstrap";
 import { createCollection } from "./actions";
 
 class Collections extends Component {
@@ -39,11 +39,12 @@ class Collections extends Component {
         </Row>
         <Row>
           {this.props.collections.map(collection => (
-            <Collection
-              key={"col-" + collection.id}
-              collection={collection}
-              canDelete={this.props.collections.length > 1}
-            />
+            <Col sm="6" key={"col-" + collection.id}>
+              <Collection
+                collection={collection}
+                canDelete={this.props.collections.length > 1}
+              />
+            </Col>
           ))}
         </Row>
       </div>
