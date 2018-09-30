@@ -1,7 +1,28 @@
 {
   "name": "hashtagifier",
+  "description": "Create collections of hashtags or any other words you need to be unique and categorized",
   "version": "0.1.0",
-  "private": true,
+  "keywords": [
+    "redux",
+    "react",
+    "bootstrap",
+    "react-redux",
+    "reactstrap"
+  ],
+  "maintainers": [
+    {
+      "name": "Alex Alexandrescu",
+      "email": "alexandrescu.alex@gmail.com",
+      "web": ""
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:alexalexandresq/hashtagifier.git"
+    }
+  ],
+  "homepage": "http://alexalexandresq.github.io/hashtagifier",
   "dependencies": {
     "bootstrap": "4",
     "immutability-helper": "^2.8.1",
@@ -16,6 +37,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -b master -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.0"
   }
 }
