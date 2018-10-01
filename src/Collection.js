@@ -7,11 +7,13 @@ import {
   CardHeader,
   CardBody,
   CardText,
-  Badge
+  Badge,
+  Input
 } from "reactstrap";
 
 const Collection = ({
   collection,
+  onCopyItems,
   onClickRemoveItem,
   onClickRemoveCollection,
   canDelete
@@ -40,13 +42,18 @@ const Collection = ({
           ))}
         </CardText>
         <Button
+          color="info"
+          onClick={() => {onCopyItems(values)}}>
+            Copy tags
+          </Button>
+        <Button
           disabled={!canDelete}
           color="danger"
           onClick={() => {
             onClickRemoveCollection(id);
           }}
         >
-          DELETE COLLECTION &times;
+          <strong>DELETE COLLECTION &times;</strong>
         </Button>
       </CardBody>
     </Card>

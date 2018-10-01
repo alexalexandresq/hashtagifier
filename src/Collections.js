@@ -1,15 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Collection from "./Collection";
-import { Button, Input, InputGroup, InputGroupAddon, Row, Col } from "reactstrap";
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  Row,
+  Col,
+  Alert
+} from "reactstrap";
 import { createCollection } from "./actions";
 
 class Collections extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { inputName: "" };
+    this.state = {
+      inputName: "",
+      copyText: "",
+      showAlert: false
+    };
     this.onClickAddCollection = this.onClickAddCollection.bind(this);
+
+    this.copyTextContainer = React.createRef();
+    this.onClickCopy = this.onClickCopy.bind(this);
   }
 
   onClickAddCollection() {
@@ -17,10 +32,32 @@ class Collections extends Component {
     this.setState({ inputName: "" });
   }
 
+  onClickCopy(values) {
+    this.setState(
+      {
+        copyText: values.join(","),
+        showAlert: true
+      },
+      () => {
+        this.copyTextContainer.current.select();
+        document.execCommand("copy");
+        this.setState({
+          copyText: ""
+        });
+        setTimeout(() => {
+          this.setState({showAlert: false});
+        }, 2000);
+      }
+    );
+  }
+
   render() {
     return (
       <div className="collections">
         <Row>
+          <Alert color="success" isOpen={this.state.showAlert}>
+            Items copied to clipboard
+          </Alert>
           <InputGroup>
             <Input
               type="text"
@@ -43,10 +80,23 @@ class Collections extends Component {
               <Collection
                 collection={collection}
                 canDelete={this.props.collections.length > 1}
+                onCopyItems={this.onClickCopy}
               />
             </Col>
           ))}
         </Row>
+        {(() => {
+          if (this.state.copyText) {
+            return (
+              <input
+                type="text"
+                readOnly
+                value={this.state.copyText}
+                ref={this.copyTextContainer}
+              />
+            );
+          }
+        })()}
       </div>
     );
   }
