@@ -7,8 +7,7 @@ import {
   CardHeader,
   CardBody,
   CardText,
-  Badge,
-  Input
+  Badge
 } from "reactstrap";
 
 const Collection = ({
@@ -30,22 +29,28 @@ const Collection = ({
           {values.map((val, i) => (
             <Badge className="m-1 p-2" color="dark" pill key={id + "-" + i}>
               {val}{" "}
-              <a
-                href="#"
+              <strong
+                className="text-danger"
+                style={{
+                  cursor: "pointer"
+                }}
                 onClick={() => {
                   onClickRemoveItem(val, id);
                 }}
               >
                 &times;
-              </a>
+              </strong>
             </Badge>
           ))}
         </CardText>
         <Button
           color="info"
-          onClick={() => {onCopyItems(values)}}>
-            Copy tags
-          </Button>
+          onClick={() => {
+            onCopyItems(values);
+          }}
+        >
+          Copy tags
+        </Button>
         <Button
           disabled={!canDelete}
           color="danger"

@@ -5,6 +5,7 @@ import {
   Input,
   InputGroup,
   Row,
+  Col,
   InputGroupButtonDropdown,
   DropdownMenu,
   DropdownItem,
@@ -18,13 +19,13 @@ class ItemsEntry extends Component {
 
     this.state = {
       textareaVal: "",
-      currentCollection: this.getCollectionName(this.props.currentCollection),
       dropdownOpen: false,
       splitButtonOpen: false
     };
 
     this.onClickAddValues = this.onClickAddValues.bind(this);
     this.toggleSplit = this.toggleSplit.bind(this);
+    this.getCollectionName = this.getCollectionName.bind(this);
   }
 
   toggleSplit() {
@@ -32,8 +33,6 @@ class ItemsEntry extends Component {
       splitButtonOpen: !this.state.splitButtonOpen
     });
   }
-
-
 
   onClickAddValues() {
     this.props.addItems(this.sanitizeInput(this.state.textareaVal));
@@ -51,16 +50,16 @@ class ItemsEntry extends Component {
   sanitizeInput(unsanitizedString) {
     return unsanitizedString
       .trim()
+      .replace(/\s/gm, ",")
+      .replace(/#/gm, "")
       .split(",")
-      .map(item => item.trim().split(" "))
-      .flat()
-      .filter(a => a)
-      .map(item => item.replace("#", ""));
+      .filter(a => a);
   }
 
   render() {
     return (
       <Row>
+        <Col>
         <InputGroup>
           <InputGroupButtonDropdown
             addonType="prepend"
@@ -68,7 +67,7 @@ class ItemsEntry extends Component {
             toggle={this.toggleSplit}
           >
             <Button onClick={this.onClickAddValues}>
-              Add to <strong>{this.state.currentCollection}</strong>
+              Add to <strong>{this.getCollectionName(this.props.currentCollection)}</strong>
             </Button>
             <DropdownToggle split />
             <DropdownMenu>
@@ -95,6 +94,7 @@ class ItemsEntry extends Component {
             }
           />
         </InputGroup>
+        </Col>
       </Row>
     );
   }

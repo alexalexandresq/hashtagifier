@@ -45,7 +45,7 @@ class Collections extends Component {
           copyText: ""
         });
         setTimeout(() => {
-          this.setState({showAlert: false});
+          this.setState({ showAlert: false });
         }, 2000);
       }
     );
@@ -55,24 +55,30 @@ class Collections extends Component {
     return (
       <div className="collections">
         <Row>
-          <Alert color="success" isOpen={this.state.showAlert}>
-            Items copied to clipboard
-          </Alert>
-          <InputGroup>
-            <Input
-              type="text"
-              value={this.state.inputName}
-              onChange={event => {
-                this.setState({ inputName: event.target.value });
-              }}
-              placeholder="New Collection"
-            />
-            <InputGroupAddon addonType="append">
-              <Button color="success" onClick={this.onClickAddCollection}>
-                Add
-              </Button>
-            </InputGroupAddon>
-          </InputGroup>
+          <Col>
+            <Alert color="success" isOpen={this.state.showAlert}>
+              Items copied to clipboard
+            </Alert>
+            <InputGroup>
+              <Input
+                type="text"
+                value={this.state.inputName}
+                onChange={event => {
+                  this.setState({ inputName: event.target.value });
+                }}
+                placeholder="New Collection"
+              />
+              <InputGroupAddon addonType="append">
+                <Button
+                  color="success"
+                  onClick={this.onClickAddCollection}
+                  disabled={!this.state.inputName}
+                >
+                  Add
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </Col>
         </Row>
         <Row>
           {this.props.collections.map(collection => (

@@ -32,11 +32,20 @@ export function appState(state = initialState, action) {
       });
     }
     case DELETE_COLLECTION:
+      let newCurrentCollection = state.currentCollection;
+      const filteredCollection = state.collections.filter(
+        collection => collection.id !== action.collectionId
+      );
+      if(state.currentCollection === action.collectionId) {
+        newCurrentCollection = filteredCollection[filteredCollection.length - 1].id;
+        localStorage.setItem("currentCollection", newCurrentCollection);
+      }
       return update(state, {
         collections: {
-          $set: state.collections.filter(
-            collection => collection.id !== action.collectionId
-          )
+          $set: filteredCollection
+        },
+        currentCollection: {
+          $set: newCurrentCollection
         }
       });
     case SELECT_COLLECTION:
